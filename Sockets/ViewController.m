@@ -85,10 +85,13 @@
 #pragma mark - Server
 
 - (void)joinServerWithUser{
+    NSString *nick = _nameTextField.text;
+    
     [[ServerManager sharedInstance] initNetworkCommunication];
-    [[ServerManager sharedInstance] joinChatWithUser:_nameTextField.text];
+    [[ServerManager sharedInstance] joinChatWithUser:nick];
     
     ChatViewController *vc = [[ChatViewController alloc] init];
+    vc.userName = nick;
     [self presentViewController:vc animated:YES completion:^{}];
 }
 

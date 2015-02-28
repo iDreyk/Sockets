@@ -11,4 +11,6 @@
 
 @interface ChatViewController : UIViewController <ServerManagerDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
 
+@property (nonatomic, copy) NSString *userName;
+
 @end

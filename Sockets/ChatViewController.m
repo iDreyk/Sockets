@@ -48,7 +48,7 @@
 
     _tableView = ({
         UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 40, screenWidth, 235)];
-        tableView.backgroundColor = [UIColor lightGrayColor];
+        tableView.backgroundColor = [UIColor whiteColor];
         tableView.delegate = self;
         tableView.dataSource = self;
         tableView;
@@ -64,7 +64,8 @@
                                                                                _tableView.frame.origin.y + _tableView.frame.size.height,
                                                                                screenWidth,
                                                                                40)];
-        textField.backgroundColor = [UIColor orangeColor];
+        textField.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.2];
+        textField.placeholder = @"Введите сообщение";
         textField.delegate = self;
         [textField becomeFirstResponder];
         textField;
@@ -130,6 +131,12 @@
     }
     
     NSString *message = _chatArray[indexPath.row];
+    if ([message hasPrefix:[NSString stringWithFormat:@"%@:", _userName]] == YES) {
+        cell.backgroundColor = [[UIColor blueColor] colorWithAlphaComponent:0.5];
+    } else {
+        cell.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.5];
+    }
+    
     cell.textLabel.text = message;
     return cell;
 }

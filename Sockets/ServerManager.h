@@ -17,7 +17,6 @@
 - (void)connectionClosedWithError:(NSError *)error;
 @end
 
-
 @interface ServerManager : NSObject <GCDAsyncSocketDelegate>
 {
     id <ServerManagerDelegate> _delegate;
