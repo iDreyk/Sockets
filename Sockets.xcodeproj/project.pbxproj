@@ -15,6 +15,9 @@
 		42EE17631AA08FFB00456C87 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 42EE17621AA08FFB00456C87 /* Images.xcassets */; };
 		42EE17661AA08FFB00456C87 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42EE17641AA08FFB00456C87 /* LaunchScreen.xib */; };
 		42EE17721AA08FFB00456C87 /* SocketsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 42EE17711AA08FFB00456C87 /* SocketsTests.m */; };
+		42EE177D1AA0A4D100456C87 /* ServerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 42EE177C1AA0A4D100456C87 /* ServerManager.m */; };
+		42EE17801AA0ADA800456C87 /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42EE177F1AA0ADA800456C87 /* ChatViewController.m */; };
+		42EE17871AA0B38700456C87 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 42EE17841AA0B38700456C87 /* GCDAsyncSocket.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +45,12 @@
 		42EE176B1AA08FFB00456C87 /* SocketsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SocketsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		42EE17701AA08FFB00456C87 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		42EE17711AA08FFB00456C87 /* SocketsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SocketsTests.m; sourceTree = "<group>"; };
+		42EE177B1AA0A4D100456C87 /* ServerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerManager.h; sourceTree = "<group>"; };
+		42EE177C1AA0A4D100456C87 /* ServerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerManager.m; sourceTree = "<group>"; };
+		42EE177E1AA0ADA800456C87 /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
+		42EE177F1AA0ADA800456C87 /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
+		42EE17831AA0B38700456C87 /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
+		42EE17841AA0B38700456C87 /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,8 +94,8 @@
 			children = (
 				42EE17561AA08FFB00456C87 /* AppDelegate.h */,
 				42EE17571AA08FFB00456C87 /* AppDelegate.m */,
-				42EE175C1AA08FFB00456C87 /* ViewController.h */,
-				42EE175D1AA08FFB00456C87 /* ViewController.m */,
+				42EE17811AA0ADB100456C87 /* View Controllers */,
+				42EE17821AA0ADBC00456C87 /* Additionals */,
 				42EE175F1AA08FFB00456C87 /* Main.storyboard */,
 				42EE17621AA08FFB00456C87 /* Images.xcassets */,
 				42EE17641AA08FFB00456C87 /* LaunchScreen.xib */,
@@ -120,6 +129,28 @@
 				42EE17701AA08FFB00456C87 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		42EE17811AA0ADB100456C87 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				42EE175C1AA08FFB00456C87 /* ViewController.h */,
+				42EE175D1AA08FFB00456C87 /* ViewController.m */,
+				42EE177E1AA0ADA800456C87 /* ChatViewController.h */,
+				42EE177F1AA0ADA800456C87 /* ChatViewController.m */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		42EE17821AA0ADBC00456C87 /* Additionals */ = {
+			isa = PBXGroup;
+			children = (
+				42EE177B1AA0A4D100456C87 /* ServerManager.h */,
+				42EE177C1AA0A4D100456C87 /* ServerManager.m */,
+				42EE17831AA0B38700456C87 /* GCDAsyncSocket.h */,
+				42EE17841AA0B38700456C87 /* GCDAsyncSocket.m */,
+			);
+			name = Additionals;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -222,9 +253,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42EE177D1AA0A4D100456C87 /* ServerManager.m in Sources */,
 				42EE175B1AA08FFB00456C87 /* Sockets.xcdatamodeld in Sources */,
+				42EE17801AA0ADA800456C87 /* ChatViewController.m in Sources */,
 				42EE17581AA08FFB00456C87 /* AppDelegate.m in Sources */,
 				42EE175E1AA08FFB00456C87 /* ViewController.m in Sources */,
+				42EE17871AA0B38700456C87 /* GCDAsyncSocket.m in Sources */,
 				42EE17551AA08FFB00456C87 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -348,6 +382,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Sockets/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -358,6 +393,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Sockets/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
