@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		429835811AA4668B0019ABE8 /* SPHTextBubbleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 429835801AA4668B0019ABE8 /* SPHTextBubbleCell.m */; };
+		429835861AA466DD0019ABE8 /* UIImage+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 429835851AA466DD0019ABE8 /* UIImage+Utils.m */; };
 		42EE17551AA08FFB00456C87 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 42EE17541AA08FFB00456C87 /* main.m */; };
 		42EE17581AA08FFB00456C87 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 42EE17571AA08FFB00456C87 /* AppDelegate.m */; };
 		42EE175B1AA08FFB00456C87 /* Sockets.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 42EE17591AA08FFB00456C87 /* Sockets.xcdatamodeld */; };
@@ -31,6 +33,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4298357F1AA4668B0019ABE8 /* SPHTextBubbleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPHTextBubbleCell.h; sourceTree = "<group>"; };
+		429835801AA4668B0019ABE8 /* SPHTextBubbleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPHTextBubbleCell.m; sourceTree = "<group>"; };
+		429835841AA466DD0019ABE8 /* UIImage+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Utils.h"; sourceTree = "<group>"; };
+		429835851AA466DD0019ABE8 /* UIImage+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Utils.m"; sourceTree = "<group>"; };
+		429835871AA466F00019ABE8 /* Constantvalues.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constantvalues.h; sourceTree = "<group>"; };
 		42EE174F1AA08FFB00456C87 /* Sockets.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sockets.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		42EE17531AA08FFB00456C87 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		42EE17541AA08FFB00456C87 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -71,6 +78,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		429835821AA4669A0019ABE8 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				4298357F1AA4668B0019ABE8 /* SPHTextBubbleCell.h */,
+				429835801AA4668B0019ABE8 /* SPHTextBubbleCell.m */,
+			);
+			name = Cells;
+			sourceTree = "<group>";
+		};
+		429835831AA466A50019ABE8 /* Sockets */ = {
+			isa = PBXGroup;
+			children = (
+				42EE17831AA0B38700456C87 /* GCDAsyncSocket.h */,
+				42EE17841AA0B38700456C87 /* GCDAsyncSocket.m */,
+			);
+			name = Sockets;
+			sourceTree = "<group>";
+		};
 		42EE17461AA08FFB00456C87 = {
 			isa = PBXGroup;
 			children = (
@@ -145,10 +170,13 @@
 		42EE17821AA0ADBC00456C87 /* Additionals */ = {
 			isa = PBXGroup;
 			children = (
+				429835841AA466DD0019ABE8 /* UIImage+Utils.h */,
+				429835851AA466DD0019ABE8 /* UIImage+Utils.m */,
+				429835871AA466F00019ABE8 /* Constantvalues.h */,
 				42EE177B1AA0A4D100456C87 /* ServerManager.h */,
 				42EE177C1AA0A4D100456C87 /* ServerManager.m */,
-				42EE17831AA0B38700456C87 /* GCDAsyncSocket.h */,
-				42EE17841AA0B38700456C87 /* GCDAsyncSocket.m */,
+				429835821AA4669A0019ABE8 /* Cells */,
+				429835831AA466A50019ABE8 /* Sockets */,
 			);
 			name = Additionals;
 			sourceTree = "<group>";
@@ -255,9 +283,11 @@
 			files = (
 				42EE177D1AA0A4D100456C87 /* ServerManager.m in Sources */,
 				42EE175B1AA08FFB00456C87 /* Sockets.xcdatamodeld in Sources */,
+				429835811AA4668B0019ABE8 /* SPHTextBubbleCell.m in Sources */,
 				42EE17801AA0ADA800456C87 /* ChatViewController.m in Sources */,
 				42EE17581AA08FFB00456C87 /* AppDelegate.m in Sources */,
 				42EE175E1AA08FFB00456C87 /* ViewController.m in Sources */,
+				429835861AA466DD0019ABE8 /* UIImage+Utils.m in Sources */,
 				42EE17871AA0B38700456C87 /* GCDAsyncSocket.m in Sources */,
 				42EE17551AA08FFB00456C87 /* main.m in Sources */,
 			);
@@ -452,6 +482,7 @@
 				42EE17771AA08FFB00456C87 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		42EE17781AA08FFB00456C87 /* Build configuration list for PBXNativeTarget "SocketsTests" */ = {
 			isa = XCConfigurationList;
@@ -460,6 +491,7 @@
 				42EE177A1AA08FFB00456C87 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

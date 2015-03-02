@@ -39,14 +39,15 @@
 
 - (void)initLoginButton{
     CGRect fieldFrame = _nameTextField.frame;
+    CGFloat buttonSize = 80;
     
     _loginButton = ({
-        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(fieldFrame.origin.x + fieldFrame.size.width + 20,
-                                                                      fieldFrame.origin.y + 10,
-                                                                      60,
-                                                                      fieldFrame.size.height - 10)];
+        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width / 2. - buttonSize / 2.,
+                                                                      fieldFrame.origin.y + 100,
+                                                                      buttonSize,
+                                                                      buttonSize)];
         button.layer.borderColor = [UIColor blueColor].CGColor;
-        button.layer.cornerRadius = 8.0f;
+        button.layer.cornerRadius = button.frame.size.width / 2;
         button.layer.borderWidth = 1.0f;
         
         [button setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
@@ -63,9 +64,10 @@
     CGFloat screenWidth = [[UIScreen mainScreen] bounds].size.width;
 
     _nameTextField = ({
-        UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(20, 100, screenWidth - 120, 40)];
+        UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(20, 70, screenWidth - 40, 40)];
         textField.placeholder = @"Введите свое имя";
-        
+        textField.textAlignment = NSTextAlignmentCenter;
+    
         CALayer *bottomBorder = [CALayer layer];
         bottomBorder.frame = CGRectMake(0.0f, textField.frame.size.height - 1, textField.frame.size.width, 1.0f);
         bottomBorder.backgroundColor = [UIColor blueColor].CGColor;
