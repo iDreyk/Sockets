@@ -32,5 +32,6 @@
 - (void)initNetworkCommunication;
 - (void)joinChatWithUser:(NSString *)userName;
 - (void)sendMessage:(NSString *)message;
+- (void)disconnect;
 
 @end

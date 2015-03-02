@@ -60,6 +60,10 @@
     [_socket writeData:data withTimeout:-1 tag:TAG_MESSAGE];
 }
 
+- (void)disconnect{
+    [_socket disconnectAfterReadingAndWriting];
+}
+
 #pragma mark - Self delegate
 
 - (void)dataReceived:(NSData *)data{

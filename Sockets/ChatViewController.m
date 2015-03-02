@@ -8,6 +8,7 @@
 
 #import "ChatViewController.h"
 #import "SPHTextBubbleCell.h"
+#import <CoreData/CoreData.h>
 
 @interface ChatViewController ()
 
@@ -44,6 +45,7 @@
 - (void)initData{
     [ServerManager sharedInstance].delegate = self;
     _chatArray = [NSMutableArray array];
+    [self loadData];
 }
 
 - (void)initBackButton{
@@ -99,14 +101,54 @@
     [self.view addSubview:_messageField];
 }
 
+#pragma mark - Core Data Methods
+
+- (void)loadData{
+    id delegate = [[UIApplication sharedApplication] delegate];
+    NSManagedObjectContext *context = [delegate managedObjectContext];
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"ChatData" inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
+    
+    NSError *error = [[NSError alloc] init];
+    NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
+    for (NSManagedObject *info in fetchedObjects) {
+        [_chatArray addObject:@{@"message" : [info valueForKey:@"message"],
+                                @"date"    : [info valueForKey:@"date"]}];
+    }
+    [_tableView reloadData];
+}
+
+- (void)saveMessage:(NSString *)message andDate:(NSDate *)date{
+    id delegate = [[UIApplication sharedApplication] delegate];
+
+    NSManagedObjectContext *managedObjectContext = [delegate managedObjectContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"ChatData" inManagedObjectContext:managedObjectContext];
+    NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:managedObjectContext];
+        
+    [newManagedObject setValue:date forKey:@"date"];
+    [newManagedObject setValue:message forKey:@"message"];
+        
+    NSError *error = nil;
+    if(![managedObjectContext save:&error]){
+        NSLog(@"Unresolved error: %@, %@", error, [error userInfo]);
+        abort();
+    }
+}
+
 #pragma mark - Server manager delegate
 
 - (void)dataReceived:(NSData *)data{
     NSData *strData = [data subdataWithRange:NSMakeRange(0, [data length] - 1)];
     NSString *msg = [[NSString alloc] initWithData:strData encoding:NSUTF8StringEncoding];
+    
+    NSDate *date = [NSDate date];
+    
     [_chatArray addObject:@{@"message" : msg,
-                            @"date" : [NSDate date]}];
+                            @"date" : date}];
 
+    [self saveMessage:msg andDate:date];
     [self scrollTableToBottom];
 }
 
@@ -132,10 +174,13 @@
     if (message != nil) {
         UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Ошибка" message:message delegate:nil cancelButtonTitle:@"Закрыть" otherButtonTitles:nil];
         [self dismissViewControllerAnimated:YES completion:^{
+            [[ServerManager sharedInstance] disconnect];
             [av show];
         }];
     } else {
-        [self dismissViewControllerAnimated:YES completion:^{}];
+        [self dismissViewControllerAnimated:YES completion:^{
+            [[ServerManager sharedInstance] disconnect];
+        }];
     }
 }
 
