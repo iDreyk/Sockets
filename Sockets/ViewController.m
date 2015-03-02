@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "ServerManager.h"
 #import "ChatViewController.h"
+#import "UIColor+mainColor.h"
 
 @interface ViewController ()
 
@@ -46,11 +47,11 @@
                                                                       fieldFrame.origin.y + 100,
                                                                       buttonSize,
                                                                       buttonSize)];
-        button.layer.borderColor = [UIColor blueColor].CGColor;
+        button.layer.borderColor = [UIColor mainColor].CGColor;
         button.layer.cornerRadius = button.frame.size.width / 2;
         button.layer.borderWidth = 1.0f;
         
-        [button setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor mainColor] forState:UIControlStateNormal];
         [button setTitle:@"Войти" forState:UIControlStateNormal];
         
         [button addTarget:self action:@selector(loginAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -70,7 +71,7 @@
     
         CALayer *bottomBorder = [CALayer layer];
         bottomBorder.frame = CGRectMake(0.0f, textField.frame.size.height - 1, textField.frame.size.width, 1.0f);
-        bottomBorder.backgroundColor = [UIColor blueColor].CGColor;
+        bottomBorder.backgroundColor = [UIColor mainColor].CGColor;
         [textField.layer addSublayer:bottomBorder];
         
         textField;
