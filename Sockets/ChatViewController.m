@@ -17,6 +17,7 @@
 @property (nonatomic, strong) UIButton *sendButton;
 @property (nonatomic, strong) UIButton *logoutButton;
 @property (nonatomic, strong) NSMutableArray *chatArray;
+@property (nonatomic, strong) UIView *fieldView;
 
 @end
 
@@ -62,14 +63,17 @@
 
 - (void)initTableView{
     CGFloat screenWidth = [[UIScreen mainScreen] bounds].size.width;
+    CGFloat screenHeight = [[UIScreen mainScreen] bounds].size.height;
 
     _tableView = ({
-        UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 62, screenWidth, 213)];
+        UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 62, screenWidth, screenHeight - 120)];
         tableView.backgroundColor = [UIColor clearColor];
         tableView.delegate = self;
         tableView.dataSource = self;
         tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
         tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
+        [tableView addGestureRecognizer:tap];
         tableView;
     });
     [self.view addSubview:_tableView];
@@ -77,8 +81,8 @@
 
 - (void)initTextField{
     CGFloat screenWidth = [[UIScreen mainScreen] bounds].size.width;
-    
-    UIView *backgroundView = ({
+
+    _fieldView = ({
         UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0,
                                                                 _tableView.frame.origin.y + _tableView.frame.size.height,
                                                                 screenWidth,
@@ -86,19 +90,19 @@
         view.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.2];
         view;
     });
-    [self.view addSubview:backgroundView];
+    [self.view addSubview:_fieldView];
     
     _messageField = ({
         UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(20,
-                                                                               backgroundView.frame.origin.y,
-                                                                               backgroundView.frame.size.width - 40,
-                                                                               backgroundView.frame.size.height)];
+                                                                               0,
+                                                                               _fieldView.frame.size.width - 40,
+                                                                               _fieldView.frame.size.height)];
         textField.placeholder = @"Введите сообщение";
         textField.delegate = self;
         [textField becomeFirstResponder];
         textField;
     });
-    [self.view addSubview:_messageField];
+    [_fieldView addSubview:_messageField];
 }
 
 #pragma mark - Core Data Methods
@@ -109,9 +113,13 @@
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"ChatData" inManagedObjectContext:context];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"username LIKE %@", _userName];
+    [fetchRequest setPredicate:predicate];
+
     [fetchRequest setEntity:entity];
     
-    NSError *error = [[NSError alloc] init];
+    NSError *error;
     NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
     for (NSManagedObject *info in fetchedObjects) {
         [_chatArray addObject:@{@"message" : [info valueForKey:@"message"],
@@ -120,7 +128,7 @@
     [_tableView reloadData];
 }
 
-- (void)saveMessage:(NSString *)message andDate:(NSDate *)date{
+- (void)saveMessage:(NSString *)message andDate:(NSDate *)date forUser:(NSString *)userName{
     id delegate = [[UIApplication sharedApplication] delegate];
 
     NSManagedObjectContext *managedObjectContext = [delegate managedObjectContext];
@@ -129,6 +137,7 @@
         
     [newManagedObject setValue:date forKey:@"date"];
     [newManagedObject setValue:message forKey:@"message"];
+    [newManagedObject setValue:userName forKey:@"username"];
         
     NSError *error = nil;
     if(![managedObjectContext save:&error]){
@@ -148,7 +157,8 @@
     [_chatArray addObject:@{@"message" : msg,
                             @"date" : date}];
 
-    [self saveMessage:msg andDate:date];
+    [self saveMessage:msg andDate:date forUser:_userName];
+    [_tableView reloadData];
     [self scrollTableToBottom];
 }
 
@@ -160,7 +170,6 @@
 #pragma mark - Actions
 
 - (void)scrollTableToBottom{
-    [_tableView reloadData];
     NSIndexPath* ipath = [NSIndexPath indexPathForRow:[_chatArray count]-1 inSection:0];
     [_tableView scrollToRowAtIndexPath:ipath atScrollPosition:UITableViewScrollPositionTop animated:YES];
 }
@@ -171,16 +180,15 @@
 }
 
 - (void)logoutWithMessage:(NSString *)message{
+    [[ServerManager sharedInstance] disconnect];
+
     if (message != nil) {
         UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Ошибка" message:message delegate:nil cancelButtonTitle:@"Закрыть" otherButtonTitles:nil];
         [self dismissViewControllerAnimated:YES completion:^{
-            [[ServerManager sharedInstance] disconnect];
             [av show];
         }];
     } else {
-        [self dismissViewControllerAnimated:YES completion:^{
-            [[ServerManager sharedInstance] disconnect];
-        }];
+        [self dismissViewControllerAnimated:YES completion:^{}];
     }
 }
 
@@ -240,9 +248,42 @@
 
 #pragma mark - UITextField delegate
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+-(void)dismissKeyboard
+{
+    [self.view endEditing:YES];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
     [self sendMessage];
     return NO;
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    if (_chatArray.count > 2) {
+        [self performSelector:@selector(scrollTableToBottom) withObject:nil afterDelay:0.0];
+    }
+    CGRect frame = _tableView.frame;
+    frame.size.height -= 210;
+    
+    [UIView animateWithDuration:0.25 animations:^{
+        _fieldView.frame = CGRectMake(0, self.view.frame.size.height - 265, self.view.frame.size.width, 50);
+        _tableView.frame = frame;
+    }];
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    CGRect frame = _tableView.frame;
+    frame.size.height += 210;
+    [UIView animateWithDuration:0.25 animations:^{
+        _fieldView.frame = CGRectMake(0, self.view.frame.size.height - 50, self.view.frame.size.width, 50);
+        _tableView.frame = frame;
+    }];
+    if (_chatArray.count > 2) {
+        [self performSelector:@selector(scrollTableToBottom) withObject:nil afterDelay:0.25];
+    }
 }
 
 @end

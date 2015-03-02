@@ -61,7 +61,7 @@
 }
 
 - (void)disconnect{
-    [_socket disconnectAfterReadingAndWriting];
+    [_socket disconnect];
 }
 
 #pragma mark - Self delegate
