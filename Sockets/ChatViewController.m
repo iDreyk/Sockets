@@ -178,8 +178,11 @@
     [formatter setDateFormat:@"HH:mm.ss"];
     NSString *dateString = [formatter stringFromDate:messageDate];
     
-    if ([message hasPrefix:[NSString stringWithFormat:@"%@:", _userName]] == YES) {
+    NSString *prefix = [NSString stringWithFormat:@"%@: ", _userName];
+    
+    if ([message hasPrefix:prefix] == YES) {
         cell.bubbletype = @"RIGHT";
+        message = [message substringFromIndex:[prefix length]];
     } else {
         cell.bubbletype = @"LEFT";
     }
