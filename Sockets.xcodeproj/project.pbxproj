@@ -126,6 +126,7 @@
 				42EE17561AA08FFB00456C87 /* AppDelegate.h */,
 				42EE17571AA08FFB00456C87 /* AppDelegate.m */,
 				42EE17811AA0ADB100456C87 /* View Controllers */,
+				42F571A51AA64DF300B8DB2D /* Managers */,
 				42EE17821AA0ADBC00456C87 /* Additionals */,
 				42EE175F1AA08FFB00456C87 /* Main.storyboard */,
 				42EE17621AA08FFB00456C87 /* Images.xcassets */,
@@ -179,16 +180,23 @@
 				429835841AA466DD0019ABE8 /* UIImage+Utils.h */,
 				429835851AA466DD0019ABE8 /* UIImage+Utils.m */,
 				429835871AA466F00019ABE8 /* Constantvalues.h */,
-				42EE177B1AA0A4D100456C87 /* ServerManager.h */,
-				42EE177C1AA0A4D100456C87 /* ServerManager.m */,
-				42F571A21AA6275E00B8DB2D /* DataManager.h */,
-				42F571A31AA6275E00B8DB2D /* DataManager.m */,
 				429835821AA4669A0019ABE8 /* Cells */,
 				429835831AA466A50019ABE8 /* Sockets */,
 				429835941AA4A6FA0019ABE8 /* UIColor+mainColor.h */,
 				429835951AA4A6FA0019ABE8 /* UIColor+mainColor.m */,
 			);
 			name = Additionals;
+			sourceTree = "<group>";
+		};
+		42F571A51AA64DF300B8DB2D /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				42EE177B1AA0A4D100456C87 /* ServerManager.h */,
+				42EE177C1AA0A4D100456C87 /* ServerManager.m */,
+				42F571A21AA6275E00B8DB2D /* DataManager.h */,
+				42F571A31AA6275E00B8DB2D /* DataManager.m */,
+			);
+			name = Managers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
