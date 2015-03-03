@@ -40,7 +40,7 @@
     });
     
     NSError *err = nil;
-    if (![_socket connectToHost:@"localhost" onPort:8080 error:&err]) // Asynchronous!
+    if (![_socket connectToHost:@"10.0.1.10" onPort:8080 error:&err]) // Asynchronous!
     {
         NSLog(@"Error: %@", err);
     }

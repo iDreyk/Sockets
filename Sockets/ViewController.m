@@ -35,6 +35,7 @@
 #pragma mark - Init
 
 - (void)initUI{
+    self.view.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.95];
     [self initNameField];
     [self initLoginButton];
 }
