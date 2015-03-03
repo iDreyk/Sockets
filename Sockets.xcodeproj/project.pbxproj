@@ -21,6 +21,7 @@
 		42EE177D1AA0A4D100456C87 /* ServerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 42EE177C1AA0A4D100456C87 /* ServerManager.m */; };
 		42EE17801AA0ADA800456C87 /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42EE177F1AA0ADA800456C87 /* ChatViewController.m */; };
 		42EE17871AA0B38700456C87 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 42EE17841AA0B38700456C87 /* GCDAsyncSocket.m */; };
+		42F571A41AA6275E00B8DB2D /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 42F571A31AA6275E00B8DB2D /* DataManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,8 @@
 		42EE177F1AA0ADA800456C87 /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
 		42EE17831AA0B38700456C87 /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
 		42EE17841AA0B38700456C87 /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
+		42F571A21AA6275E00B8DB2D /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
+		42F571A31AA6275E00B8DB2D /* DataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -178,6 +181,8 @@
 				429835871AA466F00019ABE8 /* Constantvalues.h */,
 				42EE177B1AA0A4D100456C87 /* ServerManager.h */,
 				42EE177C1AA0A4D100456C87 /* ServerManager.m */,
+				42F571A21AA6275E00B8DB2D /* DataManager.h */,
+				42F571A31AA6275E00B8DB2D /* DataManager.m */,
 				429835821AA4669A0019ABE8 /* Cells */,
 				429835831AA466A50019ABE8 /* Sockets */,
 				429835941AA4A6FA0019ABE8 /* UIColor+mainColor.h */,
@@ -295,6 +300,7 @@
 				42EE175E1AA08FFB00456C87 /* ViewController.m in Sources */,
 				429835861AA466DD0019ABE8 /* UIImage+Utils.m in Sources */,
 				42EE17871AA0B38700456C87 /* GCDAsyncSocket.m in Sources */,
+				42F571A41AA6275E00B8DB2D /* DataManager.m in Sources */,
 				42EE17551AA08FFB00456C87 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

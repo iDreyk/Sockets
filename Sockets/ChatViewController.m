@@ -8,7 +8,7 @@
 
 #import "ChatViewController.h"
 #import "SPHTextBubbleCell.h"
-#import <CoreData/CoreData.h>
+#import "DataManager.h"
 
 @interface ChatViewController ()
 
@@ -105,45 +105,18 @@
     [_fieldView addSubview:_messageField];
 }
 
-#pragma mark - Core Data Methods
+#pragma mark - Data Methods
 
 - (void)loadData{
-    id delegate = [[UIApplication sharedApplication] delegate];
-    NSManagedObjectContext *context = [delegate managedObjectContext];
-    
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"ChatData" inManagedObjectContext:context];
-    
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"username LIKE %@", _userName];
-    [fetchRequest setPredicate:predicate];
-
-    [fetchRequest setEntity:entity];
-    
-    NSError *error;
-    NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
-    for (NSManagedObject *info in fetchedObjects) {
-        [_chatArray addObject:@{@"message" : [info valueForKey:@"message"],
-                                @"date"    : [info valueForKey:@"date"]}];
+    NSArray *dataArray = [[DataManager sharedInstance] getChatDataForUser:_userName];
+    if (dataArray) {
+        _chatArray = [dataArray mutableCopy];
+        [_tableView reloadData];
     }
-    [_tableView reloadData];
 }
 
 - (void)saveMessage:(NSString *)message andDate:(NSDate *)date forUser:(NSString *)userName{
-    id delegate = [[UIApplication sharedApplication] delegate];
-
-    NSManagedObjectContext *managedObjectContext = [delegate managedObjectContext];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"ChatData" inManagedObjectContext:managedObjectContext];
-    NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:managedObjectContext];
-        
-    [newManagedObject setValue:date forKey:@"date"];
-    [newManagedObject setValue:message forKey:@"message"];
-    [newManagedObject setValue:userName forKey:@"username"];
-        
-    NSError *error = nil;
-    if(![managedObjectContext save:&error]){
-        NSLog(@"Unresolved error: %@, %@", error, [error userInfo]);
-        abort();
-    }
+    [[DataManager sharedInstance] saveChatDataForUser:userName message:message date:date];
 }
 
 #pragma mark - Server manager delegate
