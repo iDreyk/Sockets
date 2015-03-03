@@ -14,6 +14,7 @@
 + (DataManager *)sharedInstance;
 
 - (NSArray *)getChatDataForUser:(NSString *)username;
+- (NSArray *)getMoreChatDataForUser:(NSString *)username;
 - (BOOL)saveChatDataForUser:(NSString *)username message:(NSString *)message date:(NSDate *)date;
 
 @end

@@ -9,6 +9,15 @@
 #import "DataManager.h"
 #import <CoreData/CoreData.h>
 
+@interface DataManager ()
+
+@property (nonatomic) NSInteger pageOffset;
+@property (nonatomic) NSInteger pageSize;
+@property (nonatomic) NSInteger dataRead;
+@property (nonatomic) NSInteger dataCount;
+
+@end
+
 @implementation DataManager
 
 + (DataManager *)sharedInstance{
@@ -42,9 +51,9 @@
     return newManagedObject;
 }
 
-- (NSArray *)fetchRequestForEntityName:(NSString *)entityName andPredicate:(NSPredicate *)predicate{
+- (NSArray *)fetchRequestForEntityName:(NSString *)entityName withPredicate:(NSPredicate *)predicate andOffset:(NSInteger)offset{
     NSManagedObjectContext *managedObjectContext = [self managedContext];
-    
+
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:entityName inManagedObjectContext:managedObjectContext];
     
@@ -53,6 +62,8 @@
     }
     [fetchRequest setEntity:entity];
     
+    [self calculatePositionForPaging:offset forRequest:fetchRequest];
+    
     NSError *error;
     NSArray *fetchedObjects = [managedObjectContext executeFetchRequest:fetchRequest error:&error];
     if (!error) {
@@ -60,6 +71,93 @@
     }
     NSLog(@"ERROR: %@, %@", error, [error userInfo]);
     return nil;
+}
+
+#pragma mark - Paging
+
+- (void)calculatePositionForPaging:(NSInteger)offset forRequest:(NSFetchRequest *)request{
+    NSInteger resultOffset = offset - _pageSize;
+    if (resultOffset < 0) {
+        request.fetchLimit = offset;
+        request.fetchOffset = 0;
+        _dataRead += offset;
+    } else {
+        request.fetchLimit = _pageSize;
+        request.fetchOffset = resultOffset;
+        _dataRead += _pageSize;
+    }
+}
+
+- (NSInteger)countForEntityWithName:(NSString *)entityName{
+    NSManagedObjectContext *managedObjectContext = [self managedContext];
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:entityName inManagedObjectContext:managedObjectContext];
+    [fetchRequest setEntity:entity];
+    
+    NSError *error;
+    NSUInteger count = [managedObjectContext countForFetchRequest:fetchRequest error:&error];
+    return count;
+}
+
+- (NSInteger)calculateCountForUser:(NSString *)username{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"username LIKE %@", username];
+
+    NSManagedObjectContext *managedObjectContext = [self managedContext];
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"ChatData" inManagedObjectContext:managedObjectContext];
+    
+    if (predicate) {
+        [fetchRequest setPredicate:predicate];
+    }
+    
+    [fetchRequest setEntity:entity];
+    
+    NSError *error;
+    NSUInteger count = [managedObjectContext countForFetchRequest:fetchRequest error:&error];
+
+    return count;
+}
+
+- (void)setPagingDataUsingUsername:(NSString *)username{
+    _dataCount = [self calculateCountForUser:username];
+    _pageOffset = _dataCount;
+    _pageSize = 10;
+    _dataRead = 0;
+}
+
+- (void)updatePagingData{
+    _dataRead += 1;
+    _dataCount += 1;
+}
+
+- (BOOL)moreDataAvailable{
+    if (_dataRead == _dataCount) {
+        return NO;
+    }
+    _pageOffset -= _pageSize;
+    return YES;
+}
+
+#pragma mark - Methods
+
+- (NSArray *)getChatDataForUser:(NSString *)username withOffset:(NSInteger)offset{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"username LIKE %@", username];
+    
+    NSArray *fetchedObjects = [self fetchRequestForEntityName:@"ChatData" withPredicate:predicate andOffset:offset];
+    
+    if (fetchedObjects == nil) {
+        return nil;
+    }
+    
+    NSMutableArray *dataArray = [NSMutableArray array];
+    
+    for (NSManagedObject *info in fetchedObjects) {
+        [dataArray addObject:@{@"message" : [info valueForKey:@"message"],
+                               @"date"    : [info valueForKey:@"date"]}];
+    }
+    return dataArray;
 }
 
 #pragma mark - Public methods
@@ -78,25 +176,20 @@
         abort();
         return NO;
     }
+    [self updatePagingData];
     return YES;
 }
 
 - (NSArray *)getChatDataForUser:(NSString *)username{
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"username LIKE %@", username];
-    
-    NSArray *fetchedObjects = [self fetchRequestForEntityName:@"ChatData" andPredicate:predicate];
-    
-    if (fetchedObjects == nil) {
+    [self setPagingDataUsingUsername:username];
+    return [self getChatDataForUser:username withOffset:_pageOffset];
+}
+
+- (NSArray *)getMoreChatDataForUser:(NSString *)username{
+    if ([self moreDataAvailable] == NO) {
         return nil;
     }
-    
-    NSMutableArray *dataArray = [NSMutableArray array];
-    
-    for (NSManagedObject *info in fetchedObjects) {
-        [dataArray addObject:@{@"message" : [info valueForKey:@"message"],
-                                @"date"    : [info valueForKey:@"date"]}];
-    }
-    return dataArray;
+    return [self getChatDataForUser:username withOffset:_pageOffset];
 }
 
 @end

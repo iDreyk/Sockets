@@ -115,6 +115,17 @@
     }
 }
 
+- (void)loadMoreData{
+    NSArray *earlierData = [[DataManager sharedInstance] getMoreChatDataForUser:_userName];
+    if (earlierData) {
+        NSMutableArray *data = [NSMutableArray arrayWithArray:earlierData];
+        [data addObjectsFromArray:_chatArray];
+        _chatArray = data;
+        [_tableView reloadData];
+        [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:earlierData.count inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+    }
+}
+
 - (void)saveMessage:(NSString *)message andDate:(NSDate *)date forUser:(NSString *)userName{
     [[DataManager sharedInstance] saveChatDataForUser:userName message:message date:date];
 }
@@ -219,6 +230,12 @@
     return cell;
 }
 
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+    if (scrollView.contentOffset.y < 10){
+        [self performSelector:@selector(loadMoreData) withObject:self afterDelay:0];
+    }
+}
+
 #pragma mark - UITextField delegate
 
 -(void)dismissKeyboard
@@ -254,9 +271,6 @@
         _fieldView.frame = CGRectMake(0, self.view.frame.size.height - 50, self.view.frame.size.width, 50);
         _tableView.frame = frame;
     }];
-    if (_chatArray.count > 2) {
-        [self performSelector:@selector(scrollTableToBottom) withObject:nil afterDelay:0.25];
-    }
 }
 
 @end
