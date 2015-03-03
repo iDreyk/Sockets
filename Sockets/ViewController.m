@@ -24,6 +24,7 @@
     [super viewDidLoad];
 
     [self initUI];
+    [self loadUsername];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -82,6 +83,7 @@
 #pragma mark - Actions
 
 - (void)loginAction:(id)sender{
+    [self saveUsername];
     [self joinServerWithUser];
 }
 
@@ -96,6 +98,17 @@
     ChatViewController *vc = [[ChatViewController alloc] init];
     vc.userName = nick;
     [self presentViewController:vc animated:YES completion:^{}];
+}
+
+#pragma mark - Cache username
+
+- (void)saveUsername{
+    [[NSUserDefaults standardUserDefaults] setObject:_nameTextField.text forKey:@"UserNameDefaults"];
+}
+
+- (void)loadUsername{
+    NSString *username = [[NSUserDefaults standardUserDefaults] objectForKey:@"UserNameDefaults"];
+    [_nameTextField setText:username];
 }
 
 @end
