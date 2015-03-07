@@ -11,5 +11,6 @@
 Деплой:
 
 - git clone https://github.com/iDreyk/Sockets.git .
+- Установить Twisted: http://twistedmatrix.com/trac/wiki/Downloads
 - Сервер можно запустить с помощью команды "python server.py"
 - Для запуска xcode project потребуется xcode (который поддерживает только Mac OS X), поэтому прикрепляю скринкаст в письме

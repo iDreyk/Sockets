@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>3D7280C5-76B1-4EE5-9E95-D79FED061BA1</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Sockets</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>15891D14ECBA3EFCDBF3E63968692F508098E77D</key>
+		<string>https://github.com/iDreyk/Sockets.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Sockets.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>15891D14ECBA3EFCDBF3E63968692F508098E77D</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/iDreyk/Sockets.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>15891D14ECBA3EFCDBF3E63968692F508098E77D</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>15891D14ECBA3EFCDBF3E63968692F508098E77D</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Sockets</string>
+		</dict>
+	</array>
+</dict>
+</plist>
